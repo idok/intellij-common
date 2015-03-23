@@ -5,7 +5,9 @@ import com.intellij.execution.configurations.PathEnvironmentVariableUtil;
 import com.intellij.openapi.util.SystemInfo;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.util.EnvironmentUtil;
+import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
+import com.wix.utils.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,8 +23,8 @@ public final class NodeFinder {
     public static final String NODE_MODULES = "node_modules";
 
     // TODO figure out a way to automatically get this path or add it to config
-    // should read from /usr/local/lib/node_modules/eslint/lib/rules
-//    public static String defaultPath = "/usr/local/lib/node_modules/eslint/lib/rules";
+    // should read from /usr/local/lib/node_modules/coffeelint/lib/rules
+//    public static String defaultPath = "/usr/local/lib/node_modules/coffeelint/lib/rules";
 // c:/users/user/appdata/roaming/npm/node_modules
 
     private NodeFinder() {
@@ -33,7 +35,7 @@ public final class NodeFinder {
     }
 
     // List infos = ContainerUtil.newArrayList();
-    // NodeModuleSearchUtil.findModulesWithName(infos, "eslint", project.getBaseDir(), null, false);
+    // NodeModuleSearchUtil.findModulesWithName(infos, "coffeelint", project.getBaseDir(), null, false);
 
 //    @Nullable
 //    public static File findInterpreterInPath() {
@@ -203,5 +205,23 @@ public final class NodeFinder {
             return file;
         }
         return null;
+    }
+
+    public static List<String> mapRelative(List<String> files, final File projectRoot) {
+//        public static List<String> searchForConfigFiles(final File projectRoot) {
+//            FilenameFilter filter = new FilenameFilter() {
+//                @Override
+//                public boolean accept(File file, String name) {
+//                    return name.equals(CONFIG_FILE);
+//                }
+//            };
+            // return Arrays.asList(files);
+//            List<String> files = FileUtils.recursiveVisitor(projectRoot, filter);
+            return ContainerUtil.map(files, new Function<String, String>() {
+                public String fun(String curFile) {
+                    return FileUtils.makeRelative(projectRoot, new File(curFile));
+                }
+            });
+//        }
     }
 }
