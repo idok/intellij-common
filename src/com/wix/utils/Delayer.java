@@ -15,6 +15,9 @@ public class Delayer {
     }
 
     public boolean should() {
+        if (lastNotification == null) {
+            return true;
+        }
         Date now = new Date();
         long delta = now.getTime() - lastNotification.getTime();
         return delta > timeOut;
