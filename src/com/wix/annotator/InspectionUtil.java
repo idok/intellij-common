@@ -45,11 +45,7 @@ public final class InspectionUtil {
     public static Annotation createAnnotation(@NotNull AnnotationHolder holder, @NotNull HighlightSeverity severity, @Nullable TextAttributes forcedTextAttributes, @NotNull TextRange range, @NotNull String message) {
         Annotation annotation;
         if (forcedTextAttributes == null) {
-            if (severity.equals(HighlightSeverity.ERROR)) {
-                annotation = holder.createErrorAnnotation(range, message);
-            } else {
-                annotation = holder.createWarningAnnotation(range, message);
-            }
+            annotation = severity.equals(HighlightSeverity.ERROR) ? holder.createErrorAnnotation(range, message) : holder.createWarningAnnotation(range, message);
         } else {
             annotation = holder.createAnnotation(severity, range, message);
             annotation.setEnforcedTextAttributes(forcedTextAttributes);
