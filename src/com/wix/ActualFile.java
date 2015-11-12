@@ -57,6 +57,7 @@ public class ActualFile {
         if (!fileDocumentManager.isFileModified(virtualFile)) {
             File file = new File(virtualFile.getPath());
             if (file.isFile()) {
+                LOG.info("Using real file " + file.getPath());
                 return new ActualFile(file);
             }
         }
@@ -79,6 +80,7 @@ public class ActualFile {
         }
         try {
             FileUtil.writeToFile(file, content);
+            LOG.info("Using temp file " + file.getPath());
             return new ActualFile(new File(virtualFile.getPath()), file);
         } catch (IOException e) {
             LOG.warn("Can not write to " + file.getAbsolutePath(), e);
