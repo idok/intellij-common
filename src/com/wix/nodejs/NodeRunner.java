@@ -45,7 +45,6 @@ public final class NodeRunner {
         return commandLine;
     }
 
-
     /**
      * @param commandLine command line to execute
      * @param timeoutInMilliseconds timeout

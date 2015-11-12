@@ -2,6 +2,7 @@ package com.wix.nodejs;
 
 import com.intellij.execution.configurations.GeneralCommandLine;
 import com.intellij.openapi.util.SystemInfo;
+import com.intellij.openapi.util.text.StringUtil;
 
 public class CLI {
     public static final String JSON = "json";
@@ -39,11 +40,29 @@ public class CLI {
         return this;
     }
 
+    public CLI paramIfNotEmpty(String key, String value) {
+        if (StringUtil.isNotEmpty(value)) {
+            param(key, value);
+        }
+        return this;
+    }
+
     public CLI json() {
         return param(FORMAT, JSON);
     }
 
     public GeneralCommandLine cmd() {
         return commandLine;
+    }
+
+    public static void addParam(GeneralCommandLine commandLine, String name, String value) {
+        commandLine.addParameter(name);
+        commandLine.addParameter(value);
+    }
+
+    public static void addParamIfNotEmpty(GeneralCommandLine commandLine, String name, String value) {
+        if (StringUtil.isNotEmpty(value)) {
+            addParam(commandLine, name, value);
+        }
     }
 }
