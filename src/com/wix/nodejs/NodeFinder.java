@@ -18,9 +18,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class NodeFinder {
-//    public static final String RT_BASE_NAME = SystemInfo.isWindows ? "rt.cmd" : "rt";
     private static final Pattern NVM_NODE_DIR_NAME_PATTERN = Pattern.compile("^v?(\\d+)\\.(\\d+)\\.(\\d+)$");
     public static final String NODE_MODULES = "node_modules";
+    public static final String BIN = ".bin";
+    public static final String NVM_DIR = "NVM_DIR";
+    public static final String USR_LOCAL_CELLAR_NODE = "/usr/local/Cellar/node";
 
     // TODO figure out a way to automatically get this path or add it to config
     // should read from /usr/local/lib/node_modules/coffeelint/lib/rules
@@ -60,46 +62,12 @@ public final class NodeFinder {
     public static List<File> searchAllScopesForBin(File projectRoot, String exeFileName) {
 //        List<File> nodeModules = searchProjectNodeModules(projectRoot);
         List<File> globalJscsBin = searchNodeModulesBin(exeFileName);
-        File file = resolvePath(projectRoot, NODE_MODULES, ".bin", exeFileName);
+        File file = resolvePath(projectRoot, NODE_MODULES, BIN, exeFileName);
         if (file.exists()) {
             globalJscsBin.add(file);
         }
-
-//        if (SystemInfo.isWindows) {
-//            File file = resolvePath(projectRoot, NODE_MODULES, ".bin", exeFileName);
-//            if (file.exists()) {
-//                globalJscsBin.add(file);
-//            }
-//        } else {
-//            File file = resolvePath(projectRoot, NODE_MODULES, ".bin", exeFileName);
-//            if (file.exists()) {
-//                globalJscsBin.add(file);
-//            }
-//        }
-//        globalJscsBin.addAll(nodeModules);
         return globalJscsBin;
     }
-
-//    @NotNull
-//    public static List<File> searchForRTBin(File projectRoot) {
-////        List<File> nodeModules = searchProjectNodeModules(projectRoot);
-//        List<File> globalRTBin = listPossibleRTExe(exeFileName);
-
-//        if (SystemInfo.isWindows) {
-//            File file = resolvePath(projectRoot, NODE_MODULES, ".bin", "rt.cmd");
-//            if (file.exists()) {
-//                globalRTBin.add(file);
-//            }
-//        } else {
-//            File file = resolvePath(projectRoot, NODE_MODULES, "react-templates", "bin", "rt.js");
-//            if (file.exists()) {
-//                globalRTBin.add(file);
-//            }
-//        }
-////        globalRTBin.addAll(nodeModules);
-//        return globalRTBin;
-//    }
-
 
     public static File resolvePath(File root, @Nullable String first, @Nullable String second, String... rest) {
         String path = buildPath(first, second, rest);
@@ -112,7 +80,7 @@ public final class NodeFinder {
 
     @NotNull
     public static List<File> listNodeInterpretersFromNvm(String exeFileName) {
-        String nvmDirPath = EnvironmentUtil.getValue("NVM_DIR");
+        String nvmDirPath = EnvironmentUtil.getValue(NVM_DIR);
         if (StringUtil.isEmpty(nvmDirPath)) {
             return Collections.emptyList();
         }
@@ -124,7 +92,7 @@ public final class NodeFinder {
     }
 
     public static List<File> listNodeInterpretersFromHomeBrew(String exeFileName) {
-        return listNodeInterpretersFromVersionDir(new File("/usr/local/Cellar/node"), exeFileName);
+        return listNodeInterpretersFromVersionDir(new File(USR_LOCAL_CELLAR_NODE), exeFileName);
     }
 
     public static List<File> listNodeInterpretersFromVersionDir(@NotNull File parentDir, String exeFileName) {
@@ -178,21 +146,6 @@ public final class NodeFinder {
         return null;
     }
 
-//    public static File find(File projectRoot, String exe) {
-//        if (SystemInfo.isWindows) {
-//            File file = NodeFinder.resolvePath(projectRoot, NodeFinder.NODE_MODULES, ".bin", exe);
-//            if (file.exists()) {
-//                return file;
-//            }
-//        } else {
-//            File file = NodeFinder.resolvePath(projectRoot, NodeFinder.NODE_MODULES, "grunt-packages", "bin", "packages.js");
-//            if (file.exists()) {
-//                return file;
-//            }
-//        }
-//        return null;
-//    }
-
     /**
      * search for projectRoot/node_modules/.bin/exe
      * @param projectRoot node modules root
@@ -200,7 +153,7 @@ public final class NodeFinder {
      * @return file
      */
     public static File findExeInProjectBin(File projectRoot, String exe) {
-        File file = NodeFinder.resolvePath(projectRoot, NodeFinder.NODE_MODULES, ".bin", exe);
+        File file = NodeFinder.resolvePath(projectRoot, NodeFinder.NODE_MODULES, BIN, exe);
         if (file.exists()) {
             return file;
         }
