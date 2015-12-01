@@ -62,9 +62,11 @@ public final class NodeFinder {
     public static List<File> searchAllScopesForBin(File projectRoot, String exeFileName) {
 //        List<File> nodeModules = searchProjectNodeModules(projectRoot);
         List<File> globalJscsBin = searchNodeModulesBin(exeFileName);
-        File file = resolvePath(projectRoot, NODE_MODULES, BIN, exeFileName);
-        if (file.exists()) {
-            globalJscsBin.add(file);
+        if (projectRoot != null) {
+            File file = resolvePath(projectRoot, NODE_MODULES, BIN, exeFileName);
+            if (file.exists()) {
+                globalJscsBin.add(file);
+            }
         }
         return globalJscsBin;
     }
