@@ -12,6 +12,7 @@ import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.ui.UIUtil;
 import com.wix.settings.ValidationInfo;
+import com.wix.settings.Validator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,8 +20,8 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
-import java.awt.List;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author yole
@@ -149,8 +150,8 @@ public class PackagesNotificationPanel {
     }
 
 
-    public void processErrors(@NotNull java.util.List<ValidationInfo> errors) {
-        if (errors.isEmpty()) {
+    public void processErrors(@NotNull Validator validator) {
+        if (validator.hasErrors()) {
             try {
                 removeAllLinkHandlers();
             } catch (Exception e) {
@@ -158,7 +159,7 @@ public class PackagesNotificationPanel {
             }
             hide();
         } else {
-            showErrors(errors);
+            showErrors(validator.errors);
         }
     }
 
