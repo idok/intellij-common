@@ -25,8 +25,8 @@ public final class NodeFinder {
     public static final String USR_LOCAL_CELLAR_NODE = "/usr/local/Cellar/node";
 
     // TODO figure out a way to automatically get this path or add it to config
-    // should read from /usr/local/lib/node_modules/coffeelint/lib/rules
-//    public static String defaultPath = "/usr/local/lib/node_modules/coffeelint/lib/rules";
+    // should read from /usr/local/lib/node_modules/sasslint/lib/rules
+//    public static String defaultPath = "/usr/local/lib/node_modules/sasslint/lib/rules";
 // c:/users/user/appdata/roaming/npm/node_modules
 
     private NodeFinder() {
@@ -37,7 +37,7 @@ public final class NodeFinder {
     }
 
     // List infos = ContainerUtil.newArrayList();
-    // NodeModuleSearchUtil.findModulesWithName(infos, "coffeelint", project.getBaseDir(), null, false);
+    // NodeModuleSearchUtil.findModulesWithName(infos, "sasslint", project.getBaseDir(), null, false);
 
 //    @Nullable
 //    public static File findInterpreterInPath() {

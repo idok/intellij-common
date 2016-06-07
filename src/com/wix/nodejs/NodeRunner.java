@@ -54,6 +54,7 @@ public final class NodeRunner {
     @NotNull
     public static ProcessOutput execute(@NotNull GeneralCommandLine commandLine, int timeoutInMilliseconds) throws ExecutionException {
         LOG.info("Running node command: " + commandLine.getCommandLineString());
+        System.out.println("Running node command: " + commandLine.getCommandLineString());
         Process process = commandLine.createProcess();
         OSProcessHandler processHandler = new ColoredProcessHandler(process, commandLine.getCommandLineString(), Charsets.UTF_8);
         final ProcessOutput output = new ProcessOutput();

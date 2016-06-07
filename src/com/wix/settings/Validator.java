@@ -19,6 +19,10 @@ public class Validator {
     }
 
     public boolean hasErrors() {
+        return !errors.isEmpty();
+    }
+
+    public boolean isEmpty() {
         return errors.isEmpty();
     }
 }

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.text.JTextComponent;
 
 public class ValidationInfo {
-    public static final String LINK_TEMPLATE = "{{LINK}}";
+    private static final String LINK_TEMPLATE = "{{LINK}}";
     private static final Logger LOG = Logger.getInstance(ValidationInfo.class);
     private final JTextComponent textComponent;
     private final String errorHtmlDescription;
